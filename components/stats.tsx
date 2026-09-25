@@ -1,13 +1,12 @@
 "use client";
 
 import { m, useInView, useReducedMotion } from "framer-motion";
-import { Award, BookOpen, Eye, FolderKanban, Users } from "lucide-react";
+import { Award, BookOpen, FolderKanban } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 import { books } from "@/data/books";
 import { certifications } from "@/data/certifications";
 import { projects } from "@/data/projects";
-import { useStats } from "@/hooks/use-stats";
 
 interface StatItem {
   id: string;
@@ -62,7 +61,6 @@ function StatsGrid() {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
   const shouldReduceMotion = useReducedMotion();
   const t = useTranslations("stats");
-  const { stats: visitStats, loading } = useStats();
 
   const statsData: StatItem[] = [
     {
@@ -111,7 +109,7 @@ function StatsGrid() {
         variants={containerVariants}
         className="container mx-auto max-w-4xl px-4"
       >
-        <div className="grid grid-cols-3 md:grid-cols-5 gap-8">
+        <div className="grid grid-cols-3 gap-8">
           {statsData.map((stat) => (
             <m.div
               key={stat.id}
@@ -125,42 +123,6 @@ function StatsGrid() {
               <p className="text-sm text-muted-foreground">{stat.label}</p>
             </m.div>
           ))}
-
-          <m.div
-            variants={itemVariants}
-            className="flex flex-col items-center text-center"
-          >
-            <Eye className="w-6 h-6 text-accent mb-3" />
-            <div className="text-4xl font-bold text-accent mb-1">
-              {loading ? (
-                "..."
-              ) : (
-                <AnimatedCounter
-                  value={visitStats.totalVisits}
-                  isInView={isInView}
-                />
-              )}
-            </div>
-            <p className="text-sm text-muted-foreground">{t("visits")}</p>
-          </m.div>
-
-          <m.div
-            variants={itemVariants}
-            className="flex flex-col items-center text-center"
-          >
-            <Users className="w-6 h-6 text-accent mb-3" />
-            <div className="text-4xl font-bold text-accent mb-1">
-              {loading ? (
-                "..."
-              ) : (
-                <AnimatedCounter
-                  value={visitStats.uniqueVisitors}
-                  isInView={isInView}
-                />
-              )}
-            </div>
-            <p className="text-sm text-muted-foreground">{t("visitors")}</p>
-          </m.div>
         </div>
       </m.div>
     </section>
@@ -169,7 +131,6 @@ function StatsGrid() {
 
 function StatsStatic() {
   const t = useTranslations("stats");
-  const { stats: visitStats, loading } = useStats();
 
   const statsData: StatItem[] = [
     {
@@ -195,7 +156,7 @@ function StatsStatic() {
   return (
     <section className="py-12 border-y border-border">
       <div className="container mx-auto max-w-4xl px-4">
-        <div className="grid grid-cols-3 md:grid-cols-5 gap-8">
+        <div className="grid grid-cols-3 gap-8">
           {statsData.map((stat) => (
             <div
               key={stat.id}
@@ -208,22 +169,6 @@ function StatsStatic() {
               <p className="text-sm text-muted-foreground">{stat.label}</p>
             </div>
           ))}
-
-          <div className="flex flex-col items-center text-center">
-            <Eye className="w-6 h-6 text-accent mb-3" />
-            <div className="text-4xl font-bold text-accent mb-1">
-              {loading ? "..." : visitStats.totalVisits}
-            </div>
-            <p className="text-sm text-muted-foreground">{t("visits")}</p>
-          </div>
-
-          <div className="flex flex-col items-center text-center">
-            <Users className="w-6 h-6 text-accent mb-3" />
-            <div className="text-4xl font-bold text-accent mb-1">
-              {loading ? "..." : visitStats.uniqueVisitors}
-            </div>
-            <p className="text-sm text-muted-foreground">{t("visitors")}</p>
-          </div>
         </div>
       </div>
     </section>
