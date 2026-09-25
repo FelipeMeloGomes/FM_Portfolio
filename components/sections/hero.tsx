@@ -145,18 +145,23 @@ function HeroContent() {
                 {t("contactMe")}
               </Link>
               <a
-                href="/assets/FelipeMeloGomesDesenvolvedorFullStack.pdf"
+                href="/assets/curriculo/FelipeMeloGomesDesenvolvedorFullStack.pdf"
                 onClick={(e) => {
                   e.preventDefault();
                   fireConfetti?.();
-                  window.open('/assets/FelipeMeloGomesDesenvolvedorFullStack.pdf', '_blank');
-                  fetch('/assets/FelipeMeloGomesDesenvolvedorFullStack.pdf')
-                    .then(res => res.blob())
-                    .then(blob => {
+                  window.open(
+                    "/assets/curriculo/FelipeMeloGomesDesenvolvedorFullStack.pdf",
+                    "_blank"
+                  );
+                  fetch(
+                    "/assets/curriculo/FelipeMeloGomesDesenvolvedorFullStack.pdf"
+                  )
+                    .then((res) => res.blob())
+                    .then((blob) => {
                       const url = URL.createObjectURL(blob);
-                      const a = document.createElement('a');
+                      const a = document.createElement("a");
                       a.href = url;
-                      a.download = 'FelipeMeloGomesDesenvolvedorFullStack.pdf';
+                      a.download = "FelipeMeloGomesDesenvolvedorFullStack.pdf";
                       a.click();
                       URL.revokeObjectURL(url);
                     });
@@ -304,17 +309,22 @@ function HeroStatic() {
                 {t("contactMe")}
               </Link>
               <a
-                href="/assets/FelipeMeloGomesDesenvolvedorFullStack.pdf"
+                href="/assets/curriculo/FelipeMeloGomesDesenvolvedorFullStack.pdf"
                 onClick={(e) => {
                   e.preventDefault();
-                  window.open('/assets/FelipeMeloGomesDesenvolvedorFullStack.pdf', '_blank');
-                  fetch('/assets/FelipeMeloGomesDesenvolvedorFullStack.pdf')
-                    .then(res => res.blob())
-                    .then(blob => {
+                  window.open(
+                    "/assets/curriculo/FelipeMeloGomesDesenvolvedorFullStack.pdf",
+                    "_blank"
+                  );
+                  fetch(
+                    "/assets/curriculo/FelipeMeloGomesDesenvolvedorFullStack.pdf"
+                  )
+                    .then((res) => res.blob())
+                    .then((blob) => {
                       const url = URL.createObjectURL(blob);
-                      const a = document.createElement('a');
+                      const a = document.createElement("a");
                       a.href = url;
-                      a.download = 'FelipeMeloGomesDesenvolvedorFullStack.pdf';
+                      a.download = "FelipeMeloGomesDesenvolvedorFullStack.pdf";
                       a.click();
                       URL.revokeObjectURL(url);
                     });
