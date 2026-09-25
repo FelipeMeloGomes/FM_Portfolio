@@ -8,7 +8,7 @@ export function JsonLd({ locale }: { locale: string }) {
     "@type": "Person",
     name: "Felipe Melo",
     url: "https://felipemelo.dev",
-    image: "https://felipemelo.dev/assets/img/perfil.webp",
+    image: "https://felipemelo.dev/assets/img/perfil.jpg",
     jobTitle: isPt ? "Desenvolvedor Fullstack" : "Fullstack Developer",
     description: isPt
       ? "Desenvolvedor Fullstack especializado em React, Next.js, TypeScript, PHP e Laravel. Construindo soluções web escaláveis com código limpo e boas práticas."
