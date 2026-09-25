@@ -32,4 +32,52 @@ test.describe("Navbar", () => {
       .click();
     await expect(page).toHaveURL(/\/pt/);
   });
+
+  const active = (page: import("@playwright/test").Page) =>
+    page.locator('nav a[aria-current="true"]');
+
+  test("deve marcar Home no topo da pagina", async ({ page }) => {
+    await expect(active(page)).toHaveCount(1);
+    await expect(active(page)).toHaveAttribute("href", "#home");
+  });
+
+  test("deve marcar a secao clicada na navbar", async ({ page }) => {
+    // Regressão: o probe precisa ser MAIOR que o scroll-padding-top, senão a
+    // seção recién-clicada nunca é marcada e o item anterior continua ativo.
+    for (const section of [
+      "about",
+      "carreira",
+      "skills",
+      "projects",
+      "books",
+    ]) {
+      await page.locator(`nav a[href="#${section}"]`).click();
+      await expect(active(page)).toHaveCount(1);
+      await expect(active(page)).toHaveAttribute("href", `#${section}`);
+    }
+  });
+
+  test("deve marcar a ultima secao ao chegar no rodape", async ({ page }) => {
+    // Repetir o scroll dentro de toPass: sob carga o layout ainda cresce depois
+    // de scrollHeight ser lido, e a rolagem não chega ao fundo. Nesse caso o
+    // probe não marca #contact, que é o comportamento correto.
+    await expect(async () => {
+      await page.evaluate(() =>
+        window.scrollTo({
+          top: document.documentElement.scrollHeight,
+          behavior: "instant",
+        })
+      );
+      await expect(active(page)).toHaveAttribute("href", "#contact");
+    }).toPass({ timeout: 15000 });
+  });
+
+  test("nunca deve marcar mais de um item", async ({ page }) => {
+    for (const y of [0, 800, 2000, 3500, 5000, 7000]) {
+      await page.evaluate((top) => {
+        window.scrollTo({ top, behavior: "instant" });
+      }, y);
+      await expect(active(page)).toHaveCount(1);
+    }
+  });
 });
