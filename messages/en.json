@@ -43,16 +43,15 @@
   },
   "certifications": {
     "title": "Certifications",
-    "subtitle": "Completed certifications and courses"
+    "subtitle": "Completed certifications and courses",
+    "viewOnLinkedin": "View on LinkedIn"
   },
   "projects": {
     "title": "Projects",
     "subtitle": "Selected projects I've worked on, using modern technologies and development best practices.",
-    "demo": "Demo",
+    "demo": "Production",
     "code": "Code",
-    "details": "Details",
-    "demoLabel": "Demo of project {title}",
-    "codeLabel": "Code of project {title}"
+    "details": "Details"
   },
   "books": {
     "title": "Books Read",

@@ -3,9 +3,9 @@
 import { m, useInView, useReducedMotion } from "framer-motion";
 import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
-import { Suspense, useEffect, useRef, useState } from "react";
+import { Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { SkeletonCertCard } from "@/components/skeleton";
-import { certifications } from "@/data/certifications";
+import { type Certification, certifications } from "@/data/certifications";
 
 const containerVariants = {
   hidden: { opacity: 0 },
@@ -33,9 +33,22 @@ const headerVariants = {
   },
 };
 
+const LINKEDIN_CERTIFICATIONS_URL =
+  "https://www.linkedin.com/in/felipemelog/details/certifications/";
+
+function sortByRecency(list: Certification[], locale: "pt" | "en") {
+  return [...list].sort(
+    (a, b) =>
+      Number(b.date) - Number(a.date) ||
+      a.title[locale].localeCompare(b.title[locale]),
+  );
+}
+
 function CertificationCard({ cert }: { cert: (typeof certifications)[0] }) {
   const shouldReduceMotion = useReducedMotion();
-  const locale = useLocale();
+  const locale = useLocale() as "pt" | "en";
+  const t = useTranslations("certifications");
+  const title = cert.title[locale];
 
   const cardMotionProps = shouldReduceMotion
     ? {}
@@ -48,24 +61,30 @@ function CertificationCard({ cert }: { cert: (typeof certifications)[0] }) {
     <m.article
       variants={cardVariants}
       {...cardMotionProps}
-      className="group border border-border rounded-lg overflow-hidden hover:border-accent/50 transition-colors"
+      className="group relative border border-border rounded-lg overflow-hidden hover:border-accent/50 transition-colors"
     >
-      <div className="aspect-video relative bg-muted">
+      <div className="aspect-square relative bg-muted">
         <Image
           src={cert.image}
-          alt={cert.title[locale as "pt" | "en"]}
+          alt={title}
           fill
-          className="object-cover cursor-pointer"
+          className="object-contain"
           sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
       </div>
       <div className="p-4">
-        <h3 className="font-semibold text-sm mb-1">
-          {cert.title[locale as "pt" | "en"]}
-        </h3>
+        <h3 className="font-semibold text-sm mb-1">{title}</h3>
         <p className="text-xs text-muted-foreground mb-2">{cert.institution}</p>
         <p className="text-xs text-muted-foreground">{cert.date}</p>
       </div>
+      <a
+        href={LINKEDIN_CERTIFICATIONS_URL}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="absolute inset-0"
+      >
+        <span className="sr-only">{`${t("viewOnLinkedin")}: ${title}`}</span>
+      </a>
     </m.article>
   );
 }
@@ -75,6 +94,11 @@ function CertificationsGrid() {
   const isInView = useInView(ref, { once: true, margin: "-50px", amount: 0.1 });
   const shouldReduceMotion = useReducedMotion();
   const t = useTranslations("certifications");
+  const locale = useLocale() as "pt" | "en";
+  const sortedCertifications = useMemo(
+    () => sortByRecency(certifications, locale),
+    [locale],
+  );
 
   const finalHeaderVariants = shouldReduceMotion
     ? { hidden: { opacity: 1, y: 0 }, visible: { opacity: 1, y: 0 } }
@@ -106,7 +130,7 @@ function CertificationsGrid() {
         className="container mx-auto max-w-5xl px-4"
       >
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {certifications.map((cert) => (
+          {sortedCertifications.map((cert) => (
             <CertificationCard key={cert.id} cert={cert} />
           ))}
         </div>
@@ -141,7 +165,11 @@ function CertificationsLoading() {
 
 function CertificationsStatic() {
   const t = useTranslations("certifications");
-  const locale = useLocale();
+  const locale = useLocale() as "pt" | "en";
+  const sortedCertifications = useMemo(
+    () => sortByRecency(certifications, locale),
+    [locale],
+  );
 
   return (
     <section id="certifications" className="py-20">
@@ -154,29 +182,39 @@ function CertificationsStatic() {
 
       <div className="container mx-auto max-w-5xl px-4">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          {certifications.map((cert) => (
+          {sortedCertifications.map((cert) => (
             <article
               key={cert.id}
-              className="group border border-border rounded-lg overflow-hidden hover:border-accent/50 transition-colors"
+              className="group relative border border-border rounded-lg overflow-hidden hover:border-accent/50 transition-colors"
             >
-              <div className="aspect-video relative bg-muted">
+              <div className="aspect-square relative bg-muted">
                 <Image
                   src={cert.image}
-                  alt={cert.title[locale as "pt" | "en"]}
+                  alt={cert.title[locale]}
                   fill
-                  className="object-cover"
+                  className="object-contain"
                   sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
                 />
               </div>
               <div className="p-4">
                 <h3 className="font-semibold text-sm mb-1">
-                  {cert.title[locale as "pt" | "en"]}
+                  {cert.title[locale]}
                 </h3>
                 <p className="text-xs text-muted-foreground mb-2">
                   {cert.institution}
                 </p>
                 <p className="text-xs text-muted-foreground">{cert.date}</p>
               </div>
+              <a
+                href={LINKEDIN_CERTIFICATIONS_URL}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="absolute inset-0"
+              >
+                <span className="sr-only">
+                  {`${t("viewOnLinkedin")}: ${cert.title[locale]}`}
+                </span>
+              </a>
             </article>
           ))}
         </div>
