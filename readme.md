@@ -1,7 +1,7 @@
 # Felipe Melo | Portfolio
 
 ![Deploy](https://vercel.com/badge?theme=github&id=6e87f309-43cc-4eb2-8aae-dc338704617f)
-![CI/CD](https://github.com/FelipeMeloGomes/FM-Portfolio/actions/workflows/ci.yml/badge.svg)
+![CI/CD](https://github.com/FelipeMeloGomes/FM_Portfolio/actions/workflows/ci.yml/badge.svg)
 ![License](https://img.shields.io/badge/License-MIT-blue?style=flat-square)
 ![Next.js](https://img.shields.io/badge/Next.js-14-black?style=flat-square&logo=next.js)
 ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?style=flat-square&logo=typescript)
@@ -208,10 +208,10 @@ Portfólio pessoal de desenvolvedor fullstack, showcasing projetos, habilidades 
 
 ```bash
 # Clone o repositório
-git clone https://github.com/FelipeMelogomes/FM-Portfolio.git
+git clone https://github.com/FelipeMeloGomes/FM_Portfolio.git
 
 # Entre no diretório
-cd FM-Portfolio
+cd FM_Portfolio
 
 # Instale as dependências
 pnpm install
