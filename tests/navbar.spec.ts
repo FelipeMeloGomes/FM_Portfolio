@@ -41,9 +41,17 @@ test.describe("Navbar", () => {
     await expect(active(page)).toHaveAttribute("href", "#home");
   });
 
-  test("deve marcar a secao clicada na navbar", async ({ page }) => {
+  test("deve marcar a secao clicada na navbar", async ({ page, viewport }) => {
+    // Só desktop: abaixo de md o <ul> da navbar é `hidden md:flex` e o projeto
+    // não tem menu mobile, então os links existem no DOM mas não são visíveis —
+    // clicar neles é impossível e o timeout não significaria falha do produto.
+    test.skip(
+      (viewport?.width ?? 0) < 768,
+      "links da navbar não são visíveis abaixo de md"
+    );
+
     // Regressão: o probe precisa ser MAIOR que o scroll-padding-top, senão a
-    // seção recién-clicada nunca é marcada e o item anterior continua ativo.
+    // seção recém-clicada nunca é marcada e o item anterior continua ativo.
     for (const section of [
       "about",
       "carreira",
