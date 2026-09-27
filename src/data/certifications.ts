@@ -110,4 +110,24 @@ export const certifications: Certification[] = [
     date: "2026",
     image: "/assets/certifications/FM-Introduction-To-Cybersecurity.webp",
   },
+  {
+    id: "11",
+    title: {
+      pt: "Anthropic Claude 101",
+      en: "Anthropic Claude 101",
+    },
+    institution: "Anthropic",
+    date: "2026",
+    image: "/assets/certifications/FM-Claude101.webp",
+  },
+  {
+    id: "12",
+    title: {
+      pt: "Clean Code",
+      en: "Clean Code",
+    },
+    institution: "Rocketseat",
+    date: "2025",
+    image: "/assets/certifications/FM-CleanCode.webp",
+  },
 ];
