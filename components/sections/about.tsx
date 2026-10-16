@@ -4,6 +4,7 @@ import { m, useInView, useReducedMotion } from "framer-motion";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
+import { Code2 } from "lucide-react";
 
 const variants = {
   hidden: { opacity: 0, y: 30 },
@@ -13,6 +14,23 @@ const variants = {
     transition: { duration: 0.5, ease: "easeOut" as const },
   },
 };
+
+function AboutIcon() {
+  return (
+    <div className="order-1 md:order-2 flex justify-center">
+      <div
+        aria-hidden="true"
+        className="relative w-48 h-48 md:w-64 md:h-64 rounded-2xl border border-border bg-gradient-to-br from-accent/15 via-muted to-muted flex items-center justify-center"
+      >
+        <div className="absolute inset-4 rounded-xl border border-dashed border-accent/30" />
+        <Code2
+          className="relative w-20 h-20 md:w-24 md:h-24 text-accent"
+          strokeWidth={1.25}
+        />
+      </div>
+    </div>
+  );
+}
 
 function AboutContent() {
   const ref = useRef<HTMLDivElement>(null);
@@ -56,11 +74,7 @@ function AboutContent() {
             </Link>
           </div>
 
-          <div className="order-1 md:order-2 flex justify-center">
-            <div className="w-48 h-48 md:w-64 md:h-64 bg-muted rounded-2xl flex items-center justify-center">
-              <span className="text-8xl">💼</span>
-            </div>
-          </div>
+          <AboutIcon />
         </div>
       </m.div>
     </section>

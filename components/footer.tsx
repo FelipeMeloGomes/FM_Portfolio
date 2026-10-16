@@ -46,8 +46,8 @@ export function Footer() {
         </div>
 
         <p className="text-center text-sm text-muted-foreground mt-6">
-          © {new Date().getFullYear()} {t("copyright")} ❤️ {t("by")}.{" "}
-          {t("rights")}.
+          © {new Date().getFullYear()} {t("copyright")} {t("by")}. {t("rights")}
+          .
         </p>
       </div>
     </footer>
