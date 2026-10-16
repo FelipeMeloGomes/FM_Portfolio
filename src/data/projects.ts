@@ -61,7 +61,7 @@ export const projects: Project[] = [
       ],
     },
     liveUrl: "https://fm-blog.vercel.app/",
-    repoUrl: "https://github.com/FelipeMelogomes/FM-Blog",
+    repoUrl: "https://github.com/FelipeMelogomes/FM_Blog",
   },
   {
     id: "2",
